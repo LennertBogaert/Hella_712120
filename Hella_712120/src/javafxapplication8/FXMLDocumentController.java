@@ -32,6 +32,8 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private NumberAxis y_as;*/
     @FXML
+    private Button sweep;
+    @FXML
     private Button set_min;
     @FXML
     private Button set_max;
@@ -130,6 +132,24 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     void button_pressed_get_min(ActionEvent event) {
 
+    }
+    
+    @FXML
+    void button_pressed_sweep(ActionEvent event) throws InterruptedException {
+        for(int i=5;i<95;i++){
+            send[0] = 2;
+            send[1] = (char) i;
+            serial.send_int_array(send);
+            Thread.sleep(100);
+            series.getData().add(new XYChart.Data(Integer.toString(serial.get_x()), serial.get_y()));
+        }
+        for(int i=95;i>5;i--){
+            send[0] = 2;
+            send[1] = (char) i;
+            serial.send_int_array(send);
+            Thread.sleep(100);
+            series.getData().add(new XYChart.Data(Integer.toString(serial.get_x()), serial.get_y()));
+        }
     }
     
     @Override

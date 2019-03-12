@@ -34,11 +34,6 @@ import jssc.SerialPortList;
  */
 public class Hella_712120 extends Application {
     
-    //SerialPort arduinoPort = null;
-    LineChart position_chart;
-    //ToggleButton tbLED13;
-
-    
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
@@ -50,7 +45,6 @@ public class Hella_712120 extends Application {
 
     @Override
     public void stop() throws Exception {
-        //disconnectArduino();
         super.stop();
     }
 

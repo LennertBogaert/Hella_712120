@@ -9,7 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane id="AnchorPane" onMouseDragged="#button_pressed_ok" prefHeight="899.0" prefWidth="1009.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication8.FXMLDocumentController">
+<AnchorPane id="AnchorPane" onMouseDragged="#button_pressed_ok" prefHeight="518.0" prefWidth="1009.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javafxapplication8.FXMLDocumentController">
    <children>
       <Slider fx:id="Slider_pwm" layoutX="241.0" layoutY="455.0" max="95.0" min="5.0" onMouseDragReleased="#button_pressed_ok" prefHeight="14.0" prefWidth="563.0" showTickLabels="true" showTickMarks="true">
          <effect>
@@ -69,5 +69,6 @@
          </children>
       </VBox>
       <Button fx:id="update" layoutX="849.0" layoutY="228.0" mnemonicParsing="false" onAction="#button_pressed_update" text="Update" />
+      <Button fx:id="sweep" layoutX="172.0" layoutY="443.0" mnemonicParsing="false" onAction="#button_pressed_sweep" text="sweep" />
    </children>
 </AnchorPane>
