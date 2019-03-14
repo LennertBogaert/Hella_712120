@@ -1,5 +1,8 @@
 package javafxapplication8;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -36,6 +39,23 @@ public class Hella_712120 extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
+        
+        
+        try{
+            String host = "jdbc:derby://localhost:1527/Hella";
+            String user_name = "Lennert";
+            String user_pass = "admin";
+
+            Connection con = DriverManager.getConnection(host, user_name, user_pass);
+        }
+        catch(SQLException err){
+            System.out.println(err.getMessage());
+        }
+        
+        
+        
+        
+        
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
        
         Scene scene = new Scene(root);
