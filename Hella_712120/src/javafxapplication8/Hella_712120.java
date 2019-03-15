@@ -2,7 +2,9 @@ package javafxapplication8;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
@@ -47,6 +49,21 @@ public class Hella_712120 extends Application {
             String user_pass = "admin";
 
             Connection con = DriverManager.getConnection(host, user_name, user_pass);
+            
+            Statement stmt = con.createStatement();
+            String SQL = "SELECT*FROM HELLA_ACTUATORS";
+            ResultSet rs = stmt.executeQuery(SQL);
+            rs.next();
+            int g_number = rs.getInt("G_NUMBER");
+            int min_value = rs.getInt("MIN_VALUE");
+            
+            
+            
+            System.out.println(g_number + " " + min_value);
+            
+            
+            
+            
         }
         catch(SQLException err){
             System.out.println(err.getMessage());
