@@ -24,13 +24,10 @@ import javafx.scene.control.ToggleButton;
  */
 public class FXMLDocumentController implements Initializable {
     
-    Serial serial = new Serial();
+    Serial serial = new Serial("COM16");
     private int[] send = new int[8];
+    DBConnect database = new DBConnect();
     
-    /*@FXML
-    private NumberAxis x_as;
-    @FXML
-    private NumberAxis y_as;*/
     @FXML
     private Button sweep;
     @FXML

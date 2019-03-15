@@ -20,14 +20,14 @@ import jssc.SerialPortList;
  */
 public class Serial {
 
-    SerialPort arduinoPort = null;
+    SerialPort serial = null;
     private int x;
     private int y;
     private int max;
     private int min;
         
-    Serial(){
-        
+    Serial(String port){
+        //connect(port);
     }
     
     public int get_x(){
@@ -48,8 +48,8 @@ public class Serial {
     
     public void send(int send){
         try {
-            if(arduinoPort != null){
-                arduinoPort.writeInt(send);
+            if(serial != null){
+                serial.writeInt(send);
             }else{
                     System.out.println("Port not connected!");
                 }
@@ -61,8 +61,8 @@ public class Serial {
     
     public void send_int_array(int[] array){
         try {
-            if(arduinoPort != null){
-                arduinoPort.writeIntArray(array);
+            if(serial != null){
+                serial.writeIntArray(array);
             }else{
                     System.out.println("Port not connected!");
                 }
@@ -77,24 +77,25 @@ public class Serial {
         System.out.println("connect");
         
         //boolean success = false;
-        SerialPort serialPort = new SerialPort(port);
+        serial = new SerialPort(port);
+        
         try {
-            serialPort.openPort();
-            serialPort.setParams(
+            serial.openPort();
+            serial.setParams(
                     SerialPort.BAUDRATE_115200,
                     SerialPort.DATABITS_8,
                     SerialPort.STOPBITS_1,
                     SerialPort.PARITY_NONE);
-            serialPort.setEventsMask(MASK_RXCHAR);
-            serialPort.addEventListener((SerialPortEvent serialPortEvent) -> {
+            serial.setEventsMask(MASK_RXCHAR);
+            serial.addEventListener((SerialPortEvent serialPortEvent) -> {
                 if(serialPortEvent.isRXCHAR()){
                     try {
                         
-                        /*byte[] b = serialPort.readBytes();
-                        int value = b[0] & 0xff;    //convert to int
+                        //byte[] b = serialPort.readBytes();
+                        /*int value = b[0] & 0xff;    //convert to int
                         String st = String.valueOf(value);*/
                         
-                        String a = serialPort.readString(12);
+                        String a = serial.readString(15);
                             if(a.startsWith("$")){
                                 String[] data = a.split(",",3);
                                 data[0] = data[0].substring(1);
@@ -117,8 +118,7 @@ public class Serial {
                     
                 }
             });
-            
-            arduinoPort = serialPort;
+
             //success = true;
         } catch (SerialPortException ex) {
             Logger.getLogger(Hella_712120.class.getName())
@@ -132,15 +132,15 @@ public class Serial {
     public void disconnect(){
         
         System.out.println("disconnect");
-        if(arduinoPort != null){
+        if(serial != null){
             try {
-                arduinoPort.removeEventListener();
+                serial.removeEventListener();
                 
-                if(arduinoPort.isOpened()){
-                    arduinoPort.closePort();
+                if(serial.isOpened()){
+                    serial.closePort();
                 }
                 
-                arduinoPort = null;
+                serial = null;
             } catch (SerialPortException ex) {
                 Logger.getLogger(Hella_712120.class.getName())
                         .log(Level.SEVERE, null, ex);

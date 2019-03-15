@@ -41,38 +41,7 @@ public class Hella_712120 extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        
-        
-        try{
-            String host = "jdbc:derby://localhost:1527/Hella";
-            String user_name = "Lennert";
-            String user_pass = "admin";
 
-            Connection con = DriverManager.getConnection(host, user_name, user_pass);
-            
-            Statement stmt = con.createStatement();
-            String SQL = "SELECT*FROM HELLA_ACTUATORS";
-            ResultSet rs = stmt.executeQuery(SQL);
-            rs.next();
-            int g_number = rs.getInt("G_NUMBER");
-            int min_value = rs.getInt("MIN_VALUE");
-            
-            
-            
-            System.out.println(g_number + " " + min_value);
-            
-            
-            
-            
-        }
-        catch(SQLException err){
-            System.out.println(err.getMessage());
-        }
-        
-        
-        
-        
-        
         Parent root = FXMLLoader.load(getClass().getResource("FXMLDocument.fxml"));
        
         Scene scene = new Scene(root);
