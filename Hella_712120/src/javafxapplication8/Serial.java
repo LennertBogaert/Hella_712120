@@ -25,6 +25,7 @@ public class Serial {
     private int y;
     private int max;
     private int min;
+    private int current;
         
     Serial(String port){
         //connect(port);
@@ -91,18 +92,22 @@ public class Serial {
                 if(serialPortEvent.isRXCHAR()){
                     try {
                         
-                        //byte[] b = serialPort.readBytes();
+                        //byte[] b = serial.readBytes();
                         /*int value = b[0] & 0xff;    //convert to int
                         String st = String.valueOf(value);*/
                         
-                        String a = serial.readString(15);
-                            if(a.startsWith("$")){
+                        String a = serial.readString();
+                        System.out.println(a);
+                        
+                        
+                            /*if(a.startsWith("$")){*/
                                 String[] data = a.split(",",3);
-                                data[0] = data[0].substring(1);
+                                //data[0] = data[0].substring(1);
                                 x = Integer.parseInt(data[0]);
                                 y = Integer.parseInt(data[1]);
-                                System.out.println(data[0] + " " + data[1]);
-                            }
+                                //current = Integer.parseInt(data[2]);
+                                System.out.println(data[0] + " " + data[1] + " " + data[2]);
+                            //}
                         //Update label in ui thread
                         Platform.runLater(() -> {
                             //labelValue.setText(st);

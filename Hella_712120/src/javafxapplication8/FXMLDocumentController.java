@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -28,6 +29,10 @@ public class FXMLDocumentController implements Initializable {
     private int[] send = new int[8];
     DBConnect database = new DBConnect();
     
+    @FXML
+    private Label label_get_info;
+    @FXML
+    private Button get_info;
     @FXML
     private Button sweep;
     @FXML
@@ -55,6 +60,11 @@ public class FXMLDocumentController implements Initializable {
     private Label label_max;
     @FXML
     private Label label_min;
+    @FXML
+    private Button show_last_saved_chart;
+    @FXML
+    private LineChart<?, ?> saved_data_chart;
+    XYChart.Series series2 = new XYChart.Series();
 
     @FXML
     void button_pressed_connect(ActionEvent event) {
@@ -139,14 +149,34 @@ public class FXMLDocumentController implements Initializable {
             serial.send_int_array(send);
             Thread.sleep(100);
             series.getData().add(new XYChart.Data(Integer.toString(serial.get_x()), serial.get_y()));
+            database.save_point(serial.get_x(), serial.get_y());
         }
-        for(int i=95;i>5;i--){
+        /*for(int i=95;i>5;i--){
             send[0] = 2;
             send[1] = (char) i;
             serial.send_int_array(send);
             Thread.sleep(100);
             series.getData().add(new XYChart.Data(Integer.toString(serial.get_x()), serial.get_y()));
+        }*/
+    }
+    
+    @FXML
+    void button_pressed_get_info(ActionEvent event) {
+        //System.out.println(database.read_min_endpoint());
+        label_get_info.setText(Integer.toString(database.get_min_endpoint()));
+    }
+    
+    
+    @FXML
+    void button_pressed_show_last_saved_chart(ActionEvent event) {
+        
+        database.open_database();
+        for(int i=1; i<50; i++){
+            series2.getData().add(new XYChart.Data(Integer.toString(database.get_x()),database.get_y()));
+            System.out.println(database.get_x() + " " + database.get_y());
         }
+
+        
     }
     
     @Override
@@ -155,7 +185,8 @@ public class FXMLDocumentController implements Initializable {
         //y_as = new NumberAxis(0, 1024, 1); 
         //position_chart = new LineChart(xAxis,yAxis);
         position_chart.getData().add(series);
-      
+        saved_data_chart.getData().add(series2);
+        database.clear();
     }
     
 }
